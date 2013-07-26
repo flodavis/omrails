@@ -2,17 +2,22 @@ class PinsController < ApplicationController
 
   before_filter :authenticate_user!, except: [:index]
 
-  before_action :set_pin, only: [:show, :edit, :update, :destroy]
-
   # GET /pins
   # GET /pins.json
   def index
-    @pins = Pin.all
+    @pins = Pin.order("created_at desc")
+
+    respond_to do |format|
+      format.html #index.html.erb
+      format.json { render json: @pins }
+    end
   end
 
   # GET /pins/1
   # GET /pins/1.json
   def show
+    @pin = Pin.find(params[:id])
+    respond_to do |format|
   end
 
   # GET /pins/new
